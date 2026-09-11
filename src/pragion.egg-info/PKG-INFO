@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: pragion
+Version: 0.0.1
+Summary: Python-first Android application framework foundation
+Author: Pragatheeswaran
+Keywords: android,framework,python,developer-tools
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: ruff>=0.6; extra == "dev"
+Requires-Dist: mypy>=1.10; extra == "dev"
+
+# pragion
+# Pragion  Python-native Android application framework.  Build Android applications using Python through a batteries-included framework
