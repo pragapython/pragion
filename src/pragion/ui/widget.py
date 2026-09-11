@@ -3,30 +3,69 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from dataclasses import dataclass, field
 from typing import Any
 
 
 class Widget:
     """Base class for Pragion widgets."""
 
-    def __init__(self, value: str | None = None, *, on_click: Callable[[], None] | None = None) -> None:
-        self.value = value
-        self.on_click = on_click
+    def __init__(
+        self,
+        *,
+        id: str | None = None,
+        visible: bool = True,
+        enabled: bool = True,
+        parent: Widget | None = None,
+    ) -> None:
+        self.id = id or self._generate_id()
+        self.visible = visible
+        self.enabled = enabled
+        self.parent = parent
+        self.type_name = self.__class__.__name__
+
+    @staticmethod
+    def _generate_id() -> str:
+        import uuid
+
+        return uuid.uuid4().hex[:8]
 
 
-@dataclass(slots=True)
 class Text(Widget):
     """Simple textual widget."""
 
-    value: str = ""
-    on_click: Callable[[], None] | None = None
+    def __init__(
+        self,
+        text: str,
+        *,
+        id: str | None = None,
+        visible: bool = True,
+        enabled: bool = True,
+    ) -> None:
+        super().__init__(id=id, visible=visible, enabled=enabled)
+        self.text = text
+        self.type_name = "Text"
 
 
-@dataclass(slots=True)
 class Button(Widget):
     """Simple clickable button widget."""
 
-    value: str = ""
-    on_click: Callable[[], None] | None = None
-    payload: dict[str, Any] = field(default_factory=dict)
+    def __init__(
+        self,
+        text: str,
+        *,
+        on_click: Callable[[], None] | None = None,
+        id: str | None = None,
+        visible: bool = True,
+        enabled: bool = True,
+    ) -> None:
+        super().__init__(id=id, visible=visible, enabled=enabled)
+        self.text = text
+        self.on_click = on_click
+        self.type_name = "Button"
+        self.payload: dict[str, Any] = {}
+
+    def dispatch_click(self, runtime: Any) -> None:
+        """Dispatch click event to the runtime and invoke the callback."""
+        if self.on_click is not None:
+            self.on_click()
+        runtime.emit("button_click", {"widget_id": self.id})

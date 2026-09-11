@@ -1,20 +1,42 @@
 # Pragion
 
-Pragion is a Python-first Android application framework foundation for the 0.0.1 release.
+Pragion is a Python-first Android application framework whose public developer API stays in Python. The project is currently in the Phase 3 UI engine experiment.
 
 ## Vision
 
-Pragion aims to provide a Django-like, Python-native developer experience for Android application development while keeping the public API focused on Python and avoiding Kotlin or Java in application code.
+Pragion aims to provide a Django-like developer experience for Android application development while keeping the public API focused on Python and avoiding Kotlin or Java in application code.
 
 ## Current status
 
-This repository is the Phase 1 foundation for Pragion. It includes:
+This repository includes:
 
-- Python package scaffolding under src/pragion
-- version metadata and importable App base class
-- CLI with `--version`, `create`, and `doctor` commands
-- basic tests for the foundation layer
-- CI workflow for lint and testing
+- the Python package foundation
+- runtime events and lifecycle support
+- a minimal UI model with `Screen`, `Text`, `Button`, `Column`, and `Row`
+- a UI tree abstraction and renderer boundary
+- CLI support for project creation and Android runtime startup
+
+## Quick example
+
+```python
+from pragion import App
+from pragion.ui import Button, Column, Screen, Text
+
+
+class Home(Screen):
+    def build(self):
+        return Column(
+            Text("Hello from Pragion"),
+            Button("Click Me", on_click=self.clicked),
+        )
+
+    def clicked(self) -> None:
+        print("Button clicked from Python")
+
+
+class MyApp(App):
+    start = Home
+```
 
 ## Quick start
 
@@ -23,9 +45,9 @@ python -m pip install -e '.[dev]'
 pragion --version
 pragion create hello
 cd hello
-python main.py
+pragion run android
 ```
 
-## Planned phases
+## Version
 
-The project is intentionally scoped to the 0.0.1 foundation and will proceed incrementally toward runtime and Android integration in later phases.
+The current version is `0.0.3`.

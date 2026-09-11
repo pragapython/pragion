@@ -22,11 +22,11 @@ def _create_project(project_path: str) -> None:
 
     main_file = target / "main.py"
     main_file.write_text(
-        "from pragion import App\nfrom pragion.ui import Button, Screen, Text\n\n\nclass Home(Screen):\n    def build(self):\n        return [Text(\"Hello from Pragion\"), Button(\"Click Me\")]\n\n\nclass HelloApp(App):\n    start = Home()\n\n\nif __name__ == \"__main__\":\n    HelloApp().start()\n",
+        "from pragion import App\nfrom pragion.ui import Button, Column, Screen, Text\n\n\nclass Home(Screen):\n    def build(self):\n        return Column(\n            Text(\"Hello from Pragion\"),\n            Button(\"Click Me\", on_click=self.clicked),\n        )\n\n    def clicked(self) -> None:\n        print(\"Button clicked from Python\")\n\n\nclass HelloApp(App):\n    start = Home\n\n\nif __name__ == \"__main__\":\n    HelloApp().start()\n",
         encoding="utf-8",
     )
     (target / "pragion.toml").write_text(
-        "[project]\nname = \"hello\"\nversion = \"0.0.2\"\n\n[android]\npackage = \"com.pragion.hello\"\nmin_sdk = 26\ntarget_sdk = 35\n\n[application]\nentry = \"main:HelloApp\"\n",
+        "[project]\nname = \"hello\"\nversion = \"0.0.3\"\n\n[android]\npackage = \"com.pragion.hello\"\nmin_sdk = 26\ntarget_sdk = 35\n\n[application]\nentry = \"main:HelloApp\"\n",
         encoding="utf-8",
     )
     (target / "tests" / "test_app.py").write_text(
@@ -40,7 +40,7 @@ def _doctor() -> str:
     env = AndroidEnvironment()
     return "\n".join(
         [
-            "Pragion version: 0.0.2",
+            "Pragion version: 0.0.3",
             f"Python version: {platform.python_version()}",
             f"Operating system: {platform.system()} {platform.release()}",
             f"Current environment: {env.status}",

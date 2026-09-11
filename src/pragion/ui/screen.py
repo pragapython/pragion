@@ -1,18 +1,25 @@
-"""Screen abstraction for the runtime PoC."""
+"""Screen abstraction for the Pragion UI engine."""
 
 from __future__ import annotations
 
+from .column import Column
 from .widget import Widget
 
 
 class Screen(Widget):
     """Base class for a Pragion screen."""
 
-    def __init__(self, *, title: str | None = None) -> None:
-        super().__init__(value=title)
+    def __init__(self, *, title: str | None = None, id: str | None = None) -> None:
+        super().__init__(id=id)
         self.title = title
-        self.children: list[Widget] = []
+        self.type_name = "Screen"
 
-    def build(self) -> list[Widget]:
-        """Return a list of widgets for this screen."""
-        return list(self.children)
+    def build(self) -> Column:
+        """Return the root widget for the screen."""
+        return Column()
+
+    def ui_tree(self):
+        """Convert the screen into a UI tree."""
+        from .renderer import Renderer
+
+        return Renderer().render(self.build())
