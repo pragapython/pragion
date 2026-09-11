@@ -1,0 +1,2 @@
+[console_scripts]
+pragion = pragion.cli:main
