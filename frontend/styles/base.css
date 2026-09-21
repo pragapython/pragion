@@ -1,0 +1,30 @@
+body {
+  background: var(--pragion-color-background);
+  color: var(--pragion-color-text);
+  font-family: var(--pragion-font-body);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--pragion-font-display);
+  line-height: 1.15;
+}
+
+a {
+  color: var(--pragion-color-primary);
+}
+
+:focus-visible {
+  outline: 3px solid var(--pragion-color-focus);
+  outline-offset: 3px;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  min-height: 2.75rem;
+}

@@ -9,7 +9,7 @@ from pragion import App
 
 
 def test_version() -> None:
-    assert pragion.__version__ == "0.0.4"
+    assert pragion.__version__ == "0.0.5"
 
 
 def test_app_can_be_subclassed() -> None:
@@ -33,7 +33,7 @@ def test_cli_version() -> None:
         check=False,
     )
     assert result.returncode == 0
-    assert result.stdout.strip() == "Pragion 0.0.4"
+    assert result.stdout.strip() == "Pragion 0.0.5"
 
 
 def test_project_generator(tmp_path: Path) -> None:

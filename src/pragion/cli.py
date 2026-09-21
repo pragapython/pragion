@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import platform
 import sys
+import webbrowser
 from pathlib import Path
 
 from pragion import __version__
@@ -31,7 +32,7 @@ def _create_project(project_path: str) -> None:
         encoding="utf-8",
     )
     (target / "pragion.toml").write_text(
-        f"[project]\nname = \"{project_name}\"\nversion = \"0.0.4\"\n\n[android]\npackage = \"{package_name}\"\nmin_sdk = 26\ntarget_sdk = 35\n\n[application]\nentry = \"main:HelloApp\"\n",
+        f"[project]\nname = \"{project_name}\"\nversion = \"0.0.5\"\n\n[android]\npackage = \"{package_name}\"\nmin_sdk = 26\ntarget_sdk = 35\n\n[application]\nentry = \"main:HelloApp\"\n",
         encoding="utf-8",
     )
     (target / "tests" / "test_app.py").write_text(
@@ -45,7 +46,7 @@ def _doctor() -> str:
     env = AndroidEnvironment()
     return "\n".join(
         [
-            "Pragion version: 0.0.4",
+            "Pragion version: 0.0.5",
             f"Python version: {platform.python_version()}",
             f"Operating system: {platform.system()} {platform.release()}",
             f"Current environment: {env.status}",
@@ -87,6 +88,32 @@ def _run_preview(project_path: Path) -> int:
     return 0
 
 
+def _serve_gallery() -> int:
+    """Serve the repository UI gallery using the standard library."""
+    source_root = Path.cwd() / "frontend"
+    installed_root = Path(sys.prefix) / "share" / "pragion" / "frontend"
+    frontend_root = source_root if source_root.is_dir() else installed_root
+    gallery = frontend_root / "pages" / "ui-gallery.html"
+    if not gallery.is_file():
+        print("ERROR: Pragion UI gallery assets were not found.", file=sys.stderr)
+        return 1
+    import functools
+    import http.server
+
+    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(frontend_root))
+    server = http.server.ThreadingHTTPServer(("127.0.0.1", 8765), handler)
+    url = "http://127.0.0.1:8765/pages/ui-gallery.html"
+    print(f"Pragion UI Gallery: {url}")
+    webbrowser.open(url)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nPragion UI Gallery stopped.")
+    finally:
+        server.server_close()
+    return 0
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="pragion", description="Pragion CLI")
     parser.add_argument("--version", action="store_true", help="Show Pragion version")
@@ -107,6 +134,8 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     build_parser = subparsers.add_parser("build", help="Build the application")
     build_parser.add_argument("target", choices=("android",), help="Build target")
+    ui_parser = subparsers.add_parser("ui", help="Work with Pragion UI assets")
+    ui_parser.add_argument("target", choices=("gallery",), help="UI target")
     return parser
 
 
@@ -146,6 +175,9 @@ def main(argv: list[str] | None = None) -> int:
             return _build_android(Path.cwd())
         parser.print_help()
         return 0
+
+    if args.command == "ui" and args.target == "gallery":
+        return _serve_gallery()
 
     if args.command is None:
         parser.print_help()

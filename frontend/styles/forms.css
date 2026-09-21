@@ -1,0 +1,9 @@
+.pragion-field { display: grid; gap: var(--pragion-space-xs); }
+.pragion-field__label { font-size: var(--pragion-text-sm); font-weight: 700; }
+.pragion-field__required { color: var(--pragion-color-danger); }
+.pragion-input, .pragion-select, .pragion-textarea { width: 100%; border: 1px solid var(--pragion-color-border); border-radius: var(--pragion-radius-sm); background: var(--pragion-color-surface); color: var(--pragion-color-text); padding: 0.65rem 0.75rem; }
+.pragion-textarea { min-height: 7rem; resize: vertical; }
+.pragion-field__help { color: var(--pragion-color-muted); font-size: var(--pragion-text-sm); }
+.pragion-field--error .pragion-input { border-color: var(--pragion-color-danger); }
+.pragion-field__message { color: var(--pragion-color-danger); font-size: var(--pragion-text-sm); }
+.pragion-check { display: flex; align-items: center; gap: var(--pragion-space-sm); }

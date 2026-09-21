@@ -1,6 +1,6 @@
 # Pragion
 
-Pragion is a Python-first Android application framework whose public developer API stays in Python. The project is currently in the 0.0.4 local preview and Android build validation phase.
+Pragion is a Python-first Android application framework whose public developer API stays in Python. The project is currently in the 0.0.5 Pragion UI design-system phase.
 
 ## Vision
 
@@ -16,6 +16,8 @@ This repository includes:
 - a UI tree abstraction and renderer boundary
 - a local desktop preview for the supported UI widgets
 - CLI support for project creation, preview, and Android build validation
+- an offline HTML/CSS/JavaScript Pragion UI gallery
+- explicit backend/frontend separation and a JSON UI protocol boundary
 
 ## Quick example
 
@@ -51,6 +53,14 @@ pragion run
 
 `pragion run` opens a local preview window on a desktop session. `pragion build android` checks the Android toolchain; native APK generation is not implemented yet.
 
+To inspect the complete first-party UI system:
+
+```bash
+pragion ui gallery
+```
+
+The gallery is local and offline at `frontend/pages/ui-gallery.html`. The example backend boundary lives in `backend/api/customer.py` and is consumed through JSON by `frontend/scripts/api.js`.
+
 ## Version
 
-The current version is `0.0.4`.
+The current version is `0.0.5`.

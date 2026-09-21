@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pragion"
-version = "0.0.4"
+version = "0.0.5"
 description = "Python-first Android application framework foundation"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -35,6 +35,13 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.data-files]
+"share/pragion/frontend/pages" = ["frontend/pages/*.html"]
+"share/pragion/frontend/styles" = ["frontend/styles/*.css"]
+"share/pragion/frontend/scripts" = ["frontend/scripts/*.js"]
+"share/pragion/frontend/components" = ["frontend/components/README.md"]
+"share/pragion/frontend/assets" = ["frontend/assets/README.md"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

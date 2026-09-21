@@ -1,0 +1,11 @@
+@media (max-width: 48rem) {
+  .pragion-page-header__actions { display: grid; }
+  .pragion-page-header__actions .pragion-button { width: 100%; }
+  .pragion-nav { align-items: stretch; }
+  .pragion-nav__links { width: 100%; overflow-x: auto; }
+  .pragion-table th, .pragion-table td { white-space: nowrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
