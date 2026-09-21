@@ -26,6 +26,8 @@ def test_create_project_uses_phase4_ui_entry(tmp_path: Path) -> None:
     assert "Column" in main_source
     assert "Button(\"Click Me\", on_click=self.clicked)" in main_source
     assert 'version = "0.0.5"' in config
+    assert (project / "backend" / "api").is_dir()
+    assert (project / "frontend").is_dir()
 
 
 def test_run_without_target_defaults_to_preview() -> None:

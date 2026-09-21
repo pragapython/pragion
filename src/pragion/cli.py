@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import platform
+import shutil
 import sys
 import webbrowser
 from pathlib import Path
@@ -23,8 +24,20 @@ def _create_project(project_path: str) -> None:
 
     target.mkdir(parents=True, exist_ok=False)
     (target / "tests").mkdir()
+    (target / "backend" / "api").mkdir(parents=True)
     project_name = target.name
     package_name = "com.pragion." + project_name.replace("_", "-")
+    source_frontend = Path.cwd() / "frontend"
+    installed_frontend = Path(sys.prefix) / "share" / "pragion" / "frontend"
+    frontend_source = source_frontend if source_frontend.is_dir() else installed_frontend
+    if frontend_source.is_dir():
+        shutil.copytree(frontend_source, target / "frontend")
+    (target / "backend" / "__init__.py").write_text(
+        '"""Backend application boundary."""\n', encoding="utf-8"
+    )
+    (target / "backend" / "api" / "__init__.py").write_text(
+        '"""Backend API boundary."""\n', encoding="utf-8"
+    )
 
     main_file = target / "main.py"
     main_file.write_text(
