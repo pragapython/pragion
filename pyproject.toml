@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pragion"
-version = "0.0.2"
+version = "0.0.4"
 description = "Python-first Android application framework foundation"
 readme = "README.md"
 requires-python = ">=3.12"
