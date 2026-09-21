@@ -1,6 +1,6 @@
 # Pragion
 
-Pragion is a Python-first Android application framework whose public developer API stays in Python. The project is currently in the Phase 3 UI engine experiment.
+Pragion is a Python-first Android application framework whose public developer API stays in Python. The project is currently in the 0.0.4 local preview and Android build validation phase.
 
 ## Vision
 
@@ -14,7 +14,8 @@ This repository includes:
 - runtime events and lifecycle support
 - a minimal UI model with `Screen`, `Text`, `Button`, `Column`, and `Row`
 - a UI tree abstraction and renderer boundary
-- CLI support for project creation and Android runtime startup
+- a local desktop preview for the supported UI widgets
+- CLI support for project creation, preview, and Android build validation
 
 ## Quick example
 
@@ -45,9 +46,11 @@ python -m pip install -e '.[dev]'
 pragion --version
 pragion create hello
 cd hello
-pragion run android
+pragion run
 ```
+
+`pragion run` opens a local preview window on a desktop session. `pragion build android` checks the Android toolchain; native APK generation is not implemented yet.
 
 ## Version
 
-The current version is `0.0.3`.
+The current version is `0.0.4`.
